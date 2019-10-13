@@ -1,9 +1,9 @@
 #!/bin/zsh
 
-source "$(dirname $0)/lib/zcal/core.zsh"
-source "$(dirname $0)/lib/zcal/holiday.zsh"
-source "$(dirname $0)/lib/zcal/holiday/jp.zsh"
-source "$(dirname $0)/lib/zcal/output.zsh"
+source "${0:h}/lib/zcal/core.zsh"
+source "${0:h}/lib/zcal/holiday.zsh"
+source "${0:h}/lib/zcal/holiday/jp.zsh"
+source "${0:h}/lib/zcal/output.zsh"
 
 function zcal() {
   local month="${1:-"$(zcal::current-month)"}"
