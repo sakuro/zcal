@@ -1,14 +1,14 @@
 #!/bin/zsh
 
 function xdg::cache-home {
-  echo "${XDG_CACHE_HOME:-${HOME}/.cache}"
+  print "${XDG_CACHE_HOME:-${HOME}/.cache}"
 }
 
 funcion zcal::holidays-cache-path() {
   local cache_path
   zstyle -s ':zcal:' cache-path cache_path || cache_path="$(xdg::cache-home)/zsh/zcal-holidays"
   [[ -f "${cache_path}" ]] || mkdir -p "${cache_path:h}" && touch "${cache_path}"
-  echo "${cache_path}"
+  print "${cache_path}"
 }
 
 function zcal::load-holidays-cache() {
@@ -18,7 +18,7 @@ function zcal::load-holidays-cache() {
   if [[ "${#${(M)${(k)holidays}#$year-}}" = 0 ]]; then
     holidays=( $(zcal::update-holidays-cache "${year}") )
   fi
-  echo "${(qkv)holidays[@]}"
+  print "${(qkv)holidays[@]}"
 }
 
 function zcal::update-holidays-cache() {
@@ -32,7 +32,7 @@ function zcal::update-holidays-cache() {
   done
 
   zcal::dump-holidays-cache "${(kv)holidays[@]}"
-  echo "${(qkv)holidays[@]}"
+  print "${(qkv)holidays[@]}"
 }
 
 function zcal::dump-holidays-cache() {

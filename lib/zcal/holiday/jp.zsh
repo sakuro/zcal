@@ -2,8 +2,8 @@
 
 function zcal::holidays() {
   local year=$1
+  local -A year_holidays=()
 
-  typeset -A year_holidays=()
   if [[ $year == <1949-> ]]; then
     year_holidays[$year-1-1]="元日"
   fi
@@ -154,47 +154,47 @@ function zcal::holidays() {
     done
   fi
 
-  echo "${(qkv)year_holidays[@]}"
+  print "${(qkv)year_holidays[@]}"
 }
 
 function zcal::vernal-equinox-1980-2099() {
   local year=$1
   local -i a=$(( 20.8431+0.242194*(year-1980) ))
   local -i b=$(( (year-1980)/4.0 ))
-  echo $(( a - b ))
+  print $(( a - b ))
 }
 
 function zcal::vernal-equinox-1949-1979() {
   local year=$1
   local -i a=$(( 20.8357+0.242194*(year-1980) ))
   local -i b=$(( (year-1983)/4.0 ))
-  echo $(( a - b ))
+  print $(( a - b ))
 }
 
 function zcal::vernal-equinox-2100-2150() {
   local year=$1
   local -i a=$(( 21.8510+0.242194*(year-1980) ))
   local -i b=$(( (year-1980)/4.0 ))
-  echo $(( a - b ))
+  print $(( a - b ))
 }
 
 function zcal::autumnal-equinox-1980-2099() {
   local year=$1
   local -i a=$(( 23.2488+0.242194*(year-1980) ))
   local -i b=$(( (year-1980)/4.0 ))
-  echo $(( a - b ))
+  print $(( a - b ))
 }
 
 function zcal::autumnal-equinox-1948-1979() {
   local year=$1
   local -i a=$(( 23.2588+0.242194*(year-1980) ))
   local -i b=$(( (year-1983)/4.0 ))
-  echo $(( a - b ))
+  print $(( a - b ))
 }
 
 function zcal::autumnal-equinox-2100-2150() {
   local year=$1
   local -i a=$(( 24.2488+0.242194*(year-1980) ))
   local -i b=$(( (year-1980)/4.0 ))
-  echo $(( a - b ))
+  print $(( a - b ))
 }

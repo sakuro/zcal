@@ -6,12 +6,12 @@ function zcal::date-color() {
   local holiday=$3
 
   if [[ -n "$holiday" ]]; then
-    echo red
+    print red
   else
     case "${day_of_week}" in
-    6) echo blue ;;
-    7) echo red ;;
-    *) echo gray ;;
+    6) print blue ;;
+    7) print red ;;
+    *) print gray ;;
     esac
   fi
 }
@@ -34,7 +34,7 @@ function zcal::print-x() {
     indent=$((indent - 1))
   done
 
-  echo $head
+  print $head
   while [[ $# -gt 0 ]]; do
     local -a fields=(${(s.:.)1})
     local color="$(zcal::date-color "${fields[@]}")"

@@ -12,7 +12,7 @@ function zcal::days-in-month() {
   local -A holidays=( $(zcal::load-holidays-cache "${year}") )
 
   while [[ "${#zipped}" -gt 0 ]]; do
-    echo "${zipped[1]}:${zipped[2]}:$holidays[$zipped[1]]"
+    print "${zipped[1]}:${zipped[2]}:$holidays[$zipped[1]]"
     shift 2 zipped
   done
 }
@@ -20,8 +20,8 @@ function zcal::days-in-month() {
 function zcal::end-of-month() {
   local year=$1
   local month=$2
-  local days=( 31 $($(zcal::leap-year $year) && echo 29 || echo 28) 31 30 31 30 31 31 30 31 30 31 )
-  echo ${days[$month]}
+  local days=( 31 $($(zcal::leap-year $year) && print 29 || print 28) 31 30 31 30 31 31 30 31 30 31 )
+  print ${days[$month]}
 }
 
 function zcal::leap-year() {
@@ -54,7 +54,7 @@ function zcal::nth-day() {
   local -A offsets=(1 1 2 8 3 15 4 22 5 29)
   local offset="${offsets[$nth]}"
   local offset_day_of_week=$(zcal::day-of-week $year $month $offset)
-  echo "$year-$month-$(( offset + (day_of_week - offset_day_of_week + 7) % 7 ))"
+  print "$year-$month-$(( offset + (day_of_week - offset_day_of_week + 7) % 7 ))"
 }
 
 # Zeller's congruence without Julian calendar support
@@ -74,7 +74,7 @@ function zcal::day-of-week() {
   local -i t2=$((y / 4))
   local -i t3=$((c / 4))
   local -i g=$((-c * 2 + t3))
-  echo $(( (day + t1 + y + t2 + g + 5) % 7 + 1))
+  print $(( (day + t1 + y + t2 + g + 5) % 7 + 1))
 }
 
 function zcal::next-day() {
@@ -93,7 +93,7 @@ function zcal::next-day() {
       year=$(( year + 1 ))
     fi
   fi
-  echo "$year-$month-$day"
+  print "$year-$month-$day"
 }
 
 function zcal::date-compare() {
