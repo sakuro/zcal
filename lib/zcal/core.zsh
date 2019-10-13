@@ -6,7 +6,7 @@ function zcal::days-in-month() {
   local end_of_month=$(zcal::end-of-month "${year}" "${month}")
   local dates=( "${year}-${month}-"{1.."${end_of_month}"} )
   local weekdays=( {1..7} {1..7} )
-  local first_day_of_week="$(date -d "${year}"-"${month}"-1 +%u)"
+  local first_day_of_week="$(zcal::day-of-week $year $month 1)"
   weekdays=( ${weekdays:$((first_day_of_week - 1)):7} )
   local zipped=( ${dates:^^weekdays} )
   local -A holidays=( $(zcal::load-holidays-cache "${year}") )
@@ -53,6 +53,26 @@ function zcal::nth-day() {
   local day_of_week=$4
   local -A offsets=(1 1 2 8 3 15 4 22 5 29)
   local offset="${offsets[$nth]}"
-  local offset_day_of_week=$(date +%u -d "$year-$month-${offset}")
+  local offset_day_of_week=$(zcal::day-of-week $year $month $offset)
   echo "$year-$month-$(( offset + (day_of_week - offset_day_of_week + 7) % 7 ))"
+}
+
+# Zeller's congruence without Julian calendar support
+function zcal::day-of-week() {
+  local year=$1
+  local month=$2
+  local day=$3
+
+  if [[ $month == <1-2> ]]; then
+    month=$((month + 12))
+    year=$((year - 1))
+  fi
+
+  local -i c=$((year / 100))
+  local -i y=$((year % 100))
+  local -i t1=$((26 * (month + 1) / 10))
+  local -i t2=$((y / 4))
+  local -i t3=$((c / 4))
+  local -i g=$((-c * 2 + t3))
+  echo $(( (day + t1 + y + t2 + g + 5) % 7 + 1))
 }
