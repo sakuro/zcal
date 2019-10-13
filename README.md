@@ -8,10 +8,28 @@ A calendar implementation in Z-Shell
 * Holiday highlight
     * Only Japanese holidays are implemented at the moment
 
+# Customization
+
+## Colors
+
+You can specify output colors of dates using `zstyle`.
+
+### Holidays
+
+```
+zstyle ':zcal:' holiday-color yellow
+```
+
+### Days in week
+
+```
+zstyle ':zcal:' day-colors blue cyan magenta gray green red yellow
+```
+
+
 # TODO
 
 * Customization via zstyle
-    * Colorization
     * start-of-week
     * Holiday definition from locale
 * Command line options for some display styles

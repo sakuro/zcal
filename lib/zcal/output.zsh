@@ -4,21 +4,24 @@ function zcal::date-color() {
   local date=$1
   local day_of_week=$2
   local holiday=$3
+  local -a day_colors
+  local holiday_color
+
+  zstyle -a ':zcal:' day-colors day_colors || day_colors=(gray gray gray gray gray blue red)
+  zstyle -s ':zcal:' holiday-color holiday_color || holiday_color=red
 
   if [[ -n "$holiday" ]]; then
-    print red
+    print $holiday_color
+  elif [[ -n "$day_of_week" ]]; then
+    print "${day_colors[$day_of_week]}"
   else
-    case "${day_of_week}" in
-    6) print blue ;;
-    7) print red ;;
-    *) print gray ;;
-    esac
+    print ''
   fi
 }
 
 function zcal::print-l() {
   while [[ $# -gt 0 ]]; do
-    local fields=(${(s.:.)1})
+    local -a fields=(${(s.:.)1})
     local color="$(zcal::date-color "${fields[@]}")"
     print -P "%F{$color}$fields[@]%f"
     shift
