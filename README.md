@@ -8,6 +8,16 @@ A calendar implementation in Z-Shell
 * Holiday highlight
     * Only Japanese holidays are implemented at the moment
 
+# Installation
+
+## Manually
+
+1. Clone the repository
+    ```
+    git clone https://github.com/sakuro/zcal.git
+    ```
+2. Then `source` zcal.zsh from your ~/.zshrc.
+
 # Customization
 
 ## Colors
@@ -33,3 +43,4 @@ zstyle ':zcal:' day-colors blue cyan magenta gray green red yellow
     * start-of-week
     * Holiday definition from locale
 * Command line options for some display styles
+* Homebrew formula
