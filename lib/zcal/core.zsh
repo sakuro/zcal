@@ -76,3 +76,35 @@ function zcal::day-of-week() {
   local -i g=$((-c * 2 + t3))
   echo $(( (day + t1 + y + t2 + g + 5) % 7 + 1))
 }
+
+function zcal::next-day() {
+  local date_fields=( "${(s:-:)1}" )
+  local year="${date_fields[1]}"
+  local month="${date_fields[2]}"
+  local day="${date_fields[3]}"
+  local end_of_month=$(zcal::end-of-month $year $month)
+
+  day=$(( day + 1 ))
+  if [[ $day -gt $end_of_month ]]; then
+    day=1
+    month=$(( month + 1 ))
+    if [[ $month = 13 ]]; then
+      month=1
+      year=$(( year + 1 ))
+    fi
+  fi
+  echo "$year-$month-$day"
+}
+
+function zcal::date-compare() {
+  local date_a=( "${(s:-:)1}" )
+  local date_b=( "${(s:-:)2}" )
+  for i in {1..3}; do
+    if [[ $date_a[$i] -gt $date_b[$i] ]]; then
+      return -1
+    elif [[ $date_a[$i] -lt $date_b[$i] ]]; then
+      return 1
+    fi
+  done
+  return 0
+}

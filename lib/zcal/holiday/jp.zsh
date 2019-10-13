@@ -23,7 +23,7 @@ function zcal::holidays() {
   fi
 
   if [[ $year == <2007-> ]]; then
-    year_holidays[$year-4-49]="昭和の日"
+    year_holidays[$year-4-29]="昭和の日"
   elif [[ $year == <1949-1988> ]]; then
     year_holidays[$year-4-29]="天皇誕生日"
   elif [[ $year == <1989-2006> ]]; then
@@ -122,23 +122,38 @@ function zcal::holidays() {
     year_holidays[$year-4-10]="皇太子明仁親王の結婚の儀"
   fi
 
-  # local -a year_holidays_list=( "${(k)year_holidays[@]}" )
-  # if [[ $year = <2007-> ]]; then
-  #   for day in "${year_holidays_list[@]}" do
-  #     if [[ "$(date +%u -d $day)" = 7 ]]; then
-  #       while [[ "${+year_holidays[$day]}" = 0 ]]; do
-  #         day=$(zcal::next-day $day)
-  #       done
-  #       year_holidays[$day]="振替休日"
-  #     fi
-  #   done
-  # elif [[ $year = <1973-2006> ]]; then
-  #   :
-  # fi
 
-  # TODO
+  local -a year_holidays_list=( "${(k)year_holidays[@]}" )
   # 振替休日
+  if [[ $year == <2007-> ]]; then
+    for day in "${year_holidays_list[@]}"; do
+      if [[ "$(zcal::day-of-week "${(s:-:)day}")" = 7 ]]; then
+        while [[ "${+year_holidays[$day]}" = 1 ]]; do
+          day=$(zcal::next-day $day)
+        done
+        year_holidays[$day]="振替休日"
+      fi
+    done
+  elif [[ $year == <1973-> ]]; then
+    local threshold=1973-4-12
+    for day in "${year_holidays_list[@]}"; do
+      if [[ "$(zcal::day-of-week "${(s:-:)day}")" = 7 && $(zcal::date-compare "${threshold}" "${day}") -ge 0 ]]; then
+        year_holidays[$(zcal::next-day $day)]="振替休日"
+      fi
+    done
+  fi
+
   # 国民の休日
+  if [[ $year == <1986-> ]]; then
+    for day in "${year_holidays_list[@]}"; do
+      local next_day="$(zcal::next-day "${day}")"
+      local next_next_day="$(zcal::next-day "${next_day}")"
+      if [[ "${+year_holidays[$next_next_day]}" = 1 && "${+year_holidays[$next_day]}" = 0 && $(zcal::day-of-week "${next_day}") != 6 ]]; then
+        year_holidays[$next_day]="国民の休日"
+      fi
+    done
+  fi
+
   echo "${(qkv)year_holidays[@]}"
 }
 
