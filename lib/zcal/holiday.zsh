@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 function xdg::cache-home {
-  echo "${HOME}/.cache"
+  echo "${XDG_CACHE_HOME:-${HOME}/.cache}"
 }
 
 funcion zcal::holidays-cache-path() {
