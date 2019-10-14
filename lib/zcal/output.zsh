@@ -1,9 +1,8 @@
 #!/bin/zsh
 
 function zcal::date-color() {
-  local date=$1
-  local day_of_week=$2
-  local holiday=$3
+  local day_of_week=$1
+  local holiday=$2
   local -a day_colors
   local holiday_color
 
@@ -22,7 +21,7 @@ function zcal::date-color() {
 function zcal::print-l() {
   while [[ $# -gt 0 ]]; do
     local -a fields=(${(s.:.)1})
-    local color="$(zcal::date-color "${fields[@]}")"
+    local color="$(zcal::date-color "${fields[2]}" "${fields[3]}")"
     print -P "%F{$color}$fields[@]%f"
     shift
   done
@@ -40,7 +39,7 @@ function zcal::print-x() {
   print $head
   while [[ $# -gt 0 ]]; do
     local -a fields=(${(s.:.)1})
-    local color="$(zcal::date-color "${fields[@]}")"
+    local color="$(zcal::date-color "${fields[2]}" "${fields[3]}")"
     local date_fields=(${(s:-:)fields[1]})
     local date=${(l:2:)date_fields[3]}
     if [[ $fields[2] = 7 || $# = 1 ]]; then
