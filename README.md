@@ -42,5 +42,4 @@ zstyle ':zcal:' day-colors blue cyan magenta gray green red yellow
 * Customization via zstyle
     * start-of-week
     * Holiday definition from locale
-* Command line options for some display styles
 * Homebrew formula
