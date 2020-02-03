@@ -18,16 +18,6 @@ function zcal::date-color() {
   fi
 }
 
-function zcal::print-l() {
-  while [[ $# -gt 0 ]]; do
-    local -a fields=(${(s.:.)1})
-    local -a labels=( $(zcal::day-of-week-labels 1) )
-    local color="$(zcal::date-color "${fields[2]}" "${fields[3]}")"
-    print -P "%F{$color}${fields[1]} ${labels[fields[2]]} ${fields[3]}%f"
-    shift
-  done
-}
-
 function array::rotate-left() {
   local offset=$1
   shift
@@ -48,7 +38,7 @@ function zcal::day-of-week-labels() {
   print "${(j: :)result[@]}"
 }
 
-function zcal::print-x() {
+function zcal::print() {
   local -a info=(${(s.:.)1})
   local year_month=${info[1]%-*}
   local indent=$(( $info[2] - 1 ))
