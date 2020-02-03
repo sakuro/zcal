@@ -21,8 +21,9 @@ function zcal::date-color() {
 function zcal::print-l() {
   while [[ $# -gt 0 ]]; do
     local -a fields=(${(s.:.)1})
+    local -a labels=( $(zcal::day-of-week-labels 1) )
     local color="$(zcal::date-color "${fields[2]}" "${fields[3]}")"
-    print -P "%F{$color}$fields[@]%f"
+    print -P "%F{$color}${fields[1]} ${labels[fields[2]]} ${fields[3]}%f"
     shift
   done
 }
