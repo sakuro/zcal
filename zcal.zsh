@@ -18,7 +18,7 @@ function zcal() {
 
   local month="${1:-"$(zcal::current-month)"}"
   local year="${2:-"$(zcal::current-year)"}"
-  local days_in_month=( $(zcal::days-in-month "${year}" "${month}") )
+  local days_in_month=( $(zcal::days-in-month "${year#0}" "${month#0}") )
   case $method in
   print-x)
     zcal::print-x ${days_in_month[@]} ;;
