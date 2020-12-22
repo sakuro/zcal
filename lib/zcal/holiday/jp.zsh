@@ -42,18 +42,22 @@ function zcal::holidays() {
     year_holidays[$year-5-5]="こどもの日"
   fi
 
-  if [[ $year == <2003-> && $year != 2020 ]]; then
+  if [[ $year == <2003-> && $year != 2020 && $year != 2021 ]]; then
     year_holidays[$(zcal::nth-day $year 7 3 1)]="海の日"
   elif [[ $year == <1996-2002> ]]; then
     year_holidays[$year-7-20]="海の日"
   elif [[ $year = 2020 ]]; then
     year_holidays[$year-7-23]="海の日"
+  elif [[ $year = 2021 ]]; then
+    year_holidays[$year-7-22]="海の日"
   fi
 
-  if [[ $year == <2016-> && $year != 2020 ]]; then
+  if [[ $year == <2016-> && $year != 2020 && $year != 2021 ]]; then
     year_holidays[$year-8-11]="山の日"
   elif [[ $year = 2020 ]]; then
     year_holidays[$year-8-10]="山の日"
+  elif [[ $year = 2021 ]]; then
+    year_holidays[$year-8-8]="山の日"
   fi
 
   if [[ $year == <2003-> ]]; then
@@ -62,7 +66,7 @@ function zcal::holidays() {
     year_holidays[$year-9-15]="敬老の日"
   fi
 
-  if [[ $year == <2021-> ]]; then
+  if [[ $year == <2022-> ]]; then
     year_holidays[$(zcal::nth-day $year 10 2 1)]="スポーツの日"
   elif [[ $year == <2000-2019> ]]; then
     year_holidays[$(zcal::nth-day $year 10 2 1)]="体育の日"
@@ -70,6 +74,8 @@ function zcal::holidays() {
     year_holidays[$year-10-10]="体育の日"
   elif [[ $year = 2020 ]]; then
     year_holidays[$year-7-24]="スポーツの日"
+  elif [[ $year = 2021 ]]; then
+    year_holidays[$year-7-23]="スポーツの日"
   fi
 
   if [[ $year == <1948-> ]]; then
